@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+height:100vh;
+
+flex-direction:column;
+
+font-family:Arial;
+
+background:#f2f2f2;
+
+margin:0;
+
+}
+
+input{
+
+width:80%;
+
+max-width:300px;
+
+padding:15px;
+
+margin:10px;
+
+font-size:18px;
+
+border-radius:8px;
+
+border:1px solid gray;
+
+}
+
+button{
+
+width:85%;
+
+max-width:320px;
+
+padding:15px;
+
+font-size:18px;
+
+border:none;
+
+border-radius:8px;
+
+background:#007bff;
+
+color:white;
+
+cursor:pointer;
+
+}
+
+h1{
+
+text-align:center;
+
+}
+
+</style>
+  <title>Sign Up</title>
+</head>
+
+<body>
+
+<h1>Create Family Account</h1>
+
+<input type="text" id="name" placeholder="Your Name">
+
+<br><br>
+
+<input type="email" id="email" placeholder="Your Email">
+
+<br><br>
+
+<input type="password" id="password" placeholder="Your Password">
+
+<br><br>
+
+<button id="signup-btn">
+Create Account
+</button>
+
+<script type="module">
+
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+
+getAuth,
+createUserWithEmailAndPassword,
+updateProfile
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyDDqCkLKD_zwYD4ffhgTxk9qQtXTyUTSXE",
+
+authDomain: "family-chat-4ae3c.firebaseapp.com",
+
+projectId: "family-chat-4ae3c",
+
+storageBucket: "family-chat-4ae3c.firebasestorage.app",
+
+messagingSenderId: "757400177632",
+
+appId: "1:757400177632:web:3b1743038b3c4a53c3985"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const signupBtn = document.getElementById("signup-btn");
+
+signupBtn.addEventListener("click", async () => {
+
+const name = document.getElementById("name").value;
+
+const email = document.getElementById("email").value;
+
+const password = document.getElementById("password").value;
+
+try {
+
+const userCredential = await createUserWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+await updateProfile(userCredential.user, {
+
+displayName: name
+
+});
+
+alert("Account created successfully!");
+
+window.location.href = "login.html";
+
+}
+
+catch(error){
+
+alert(error.message);
+
+}
+
+});
+
+</script>
+
+</body>
+
+</html>

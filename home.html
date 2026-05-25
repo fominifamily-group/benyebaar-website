@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Family Website</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<section id="profile-section">
+
+<h2>👤 My Profile</h2>
+
+<input type="file" id="profile-pic-input">
+
+<button id="upload-profile-btn">
+
+Upload Profile Picture
+
+</button>
+
+<br><br>
+
+<img id="profile-preview"
+
+src="https://i.pravatar.cc/150?img=3"
+
+width="120"
+
+height="120"
+
+style="border-radius:50%; object-fit:cover;">
+
+</section>
+        <header>
+
+    <h1>The Benyebaar  Family</h1>
+
+    <div class="menu-toggle" id="menu-toggle">
+        ☰
+    </div>
+
+    <nav id="navbar">
+
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="admin.html">Admin Panel</a></li>
+
+
+        </ul>
+
+    </nav>
+
+    <button id="darkModeBtn">Dark Mode</button>
+
+</header>
+
+    <section id="home" class="hero">
+
+    <div class="hero-content">
+        <h2>Welcome To Benyebaar Family</h2>
+
+        <p>
+            A place where love, unity, memories, and togetherness live forever.
+             stay connected to family members,
+             share beautiful moment, chat in real time,
+             celebrate achievements, and keep our family bond strong every day.
+              home is not just a place _ it is a family.
+        </p>
+    </div>
+
+</section>
+
+    <section id="about">
+        <h2>About Our Family</h2>
+        <p>
+            The Benyebaar Family is deeply rooted in African culture,
+        unity, respect, and tradition. Our family believes in
+        love, togetherness, hard work, and preserving the rich
+        heritage passed down from generation to generation.
+        We celebrate our traditions, support one another in
+        every season of life, and remain connected through
+        faith, wisdom, and family values. Our home is built on
+        strength, unity, peace, and the spirit of togetherness.
+        As an African family, we honor our ancestors, cherish
+        our culture, and continue building a legacy that future
+        generations will proudly remember.
+        </p>
+    </section>
+<!-- ANNOUNCEMENTS -->
+
+<section id="announcements">
+
+<h2>📢 Family Announcements</h2>
+
+<div class="announcement-input">
+
+<input type="text"
+
+id="announcement-message"
+
+placeholder="Write announcement...">
+
+<button id="post-announcement">
+
+Post
+
+</button>
+
+</div>
+
+<div id="announcement-box"></div>
+
+</section>
+    <section id="gallery">
+        <h2>Family Gallery</h2>
+
+        <div class="gallery-container">
+            
+            <img src="images/image40.jpg" alt="">
+            <img src="images/image41.jpg" alt="">
+            <img src="images/image42.jpg" alt="">
+            <img src="images/image43.jpg" alt="">
+            <img src="images/image44.jpg" alt="">
+            <img src="images/image45.jpg" alt="">
+            <img src="images/image46.jpg" alt="">
+            <img src="images/image47.jpg" alt="">
+            <img src="images/image48.jpg" alt="">
+            <img src="images/image49.jpg" alt="">
+            <img src="images/image50.jpg" alt="">
+            <img src="images/image51.jpg" alt="">
+            <img src="images/image52.jpg" alt="">
+            <img src="images/image53.jpg" alt="">
+            <img src="images/image54.jpg" alt="">
+            <img src="images/image55.jpg" alt="">
+            <img src="images/image56.jpg" alt="">
+        
+
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Us</h2>
+
+        <form>
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message"></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+        <footer>
+
+    <div class="footer-container">
+
+        <div class="footer-section">
+            <h3>The Benyebaar Family</h3>
+
+            <p>
+                Sharing love, memories and happiness together.
+            </p>
+        </div>
+
+        <div class="footer-section">
+            <h3>Quick Links</h3>
+
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="familytree.html">Family Tree</a></li>
+                <li><a href="admin.html">Admin Panel</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h3>Contact</h3>
+
+            <p>Email: wanelargregory30@gmail.com</p>
+            <p>Phone: 0552182445</p>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <p class="copyright">
+        © 2026 Benyebaar Family Website | All Rights Reserved
+    </p>
+
+</footer>
+
+    <script src="script.js"></script>
+
+    <script type="module">
+
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+
+getFirestore,
+collection,
+addDoc,
+query,
+orderBy,
+onSnapshot,
+deleteDoc,
+doc,
+setDoc,
+getDoc
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyA7FCPSsD0n0J6-D0UnxIu4VwTjopyyiI8",
+
+authDomain: "benyebaar-family.firebaseapp.com",
+
+projectId: "benyebaar-family",
+
+storageBucket: "benyebaar-family.firebasestorage.app",
+
+messagingSenderId: "657772594344",
+
+appId: "1:657772594344:web:843e51ede1f0e499f32e9d",
+
+measurementId: "G-ERS3ZCXVGQ"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+const announcementInput = document.getElementById("announcement-message");
+
+const postAnnouncementBtn = document.getElementById("post-announcement");
+
+const announcementBox = document.getElementById("announcement-box");
+
+postAnnouncementBtn.addEventListener("click", async () => {
+
+if(announcementInput.value.trim() === "") return;
+
+await addDoc(collection(db, "announcements"), {
+
+text: announcementInput.value,
+
+time: Date.now(),
+
+sender: "Family Admin"
+
+});
+
+announcementInput.value = "";
+
+});
+
+const announcementQuery = query(
+
+collection(db, "announcements"),
+
+orderBy("time", "desc")
+
+);
+
+onSnapshot(announcementQuery, (snapshot) => {
+
+announcementBox.innerHTML = "";
+
+snapshot.docs.forEach((doc) => {
+
+const data = doc.data();
+
+announcementBox.innerHTML += `
+
+<div class="announcement">
+
+<h4>${data.sender}</h4>
+
+<p>${data.text}</p>
+
+<small>
+
+${new Date(data.time).toLocaleString()}
+
+</small>
+<br><br>
+
+<button onclick="deleteAnnouncement('${doc.id}')">
+
+Delete
+
+</button>
+
+</div>
+
+`;
+
+});
+
+});
+window.deleteAnnouncement = async function(id){
+
+await deleteDoc(doc(db, "announcements", id));
+
+}
+
+const profileInput = document.getElementById("profile-pic-input");
+
+const uploadProfileBtn = document.getElementById("upload-profile-btn");
+
+const profilePreview = document.getElementById("profile-preview");
+
+console.log("JavaScript loaded");
+
+uploadProfileBtn.addEventListener("click", async () => {
+    alert("Upload button clicked");
+
+const file = profileInput.files[0];
+
+if(!file) return;
+
+const formData = new FormData();
+
+formData.append("file", file);
+
+formData.append("upload_preset", "familychat");
+
+const response = await fetch(
+
+"https://api.cloudinary.com/v1_1/dhw5p0mov/image/upload",
+
+{
+
+method:"POST",
+
+body:formData
+
+}
+
+);
+
+const data = await response.json();
+
+profilePreview.src = data.secure_url;
+
+await setDoc(doc(db, "profiles", "currentUser"), {
+
+photo:data.secure_url
+
+});
+
+alert("Profile picture updated!");
+
+});
+
+async function loadProfile(){
+
+const profileRef = doc(db, "profiles", "currentUser");
+
+const profileSnap = await getDoc(profileRef);
+
+if(profileSnap.exists()){
+
+profilePreview.src = profileSnap.data().photo;
+
+}
+
+}
+
+loadProfile();
+
+
+</script>
+</body>
+</html>

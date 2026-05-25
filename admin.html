@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Panel</title>
+
+<style>
+
+body{
+
+font-family:Arial;
+background:#f0f2f5;
+padding:20px;
+
+}
+
+h1{
+
+text-align:center;
+color:#075e54;
+
+}
+
+.admin-box{
+
+background:white;
+padding:20px;
+border-radius:10px;
+margin-top:20px;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+
+}
+
+button{
+
+padding:10px 15px;
+border:none;
+background:#075e54;
+color:white;
+border-radius:5px;
+cursor:pointer;
+margin-top:10px;
+
+}
+
+input{
+
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:5px;
+border:1px solid #ccc;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>👨‍💻 Family Admin Panel</h1>
+
+<div class="admin-box">
+
+<h3>Post Announcement</h3>
+
+<input type="text" id="announcement">
+
+<button id="post-btn">
+
+Post Announcement
+
+</button>
+
+</div>
+
+<div class="admin-box">
+
+<h3>Admin Actions</h3>
+
+<h3>Delete User Messages</h3>
+
+<input type="text"
+
+id="delete-user-name"
+
+placeholder="Enter username">
+
+<button id="delete-user-btn">
+
+Delete User Messages
+
+</button>
+
+<button onclick="window.location.href='chat.html'">
+
+Open Family Chat
+
+</button>
+
+</div>
+
+<script type="module">
+
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+addDoc,
+getDocs,
+query,
+where,
+deleteDoc,
+doc
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyA7FCPSsD0n0J6-D0UnxIu4VwTjopyyiI8",
+
+authDomain: "benyebaar-family.firebaseapp.com",
+
+projectId: "benyebaar-family",
+
+storageBucket: "benyebaar-family.firebasestorage.app",
+
+messagingSenderId: "657772594344",
+
+appId: "1:657772594344:web:843e51ede1f0e499f32e9d",
+
+measurementId: "G-ERS3ZCXVGQ"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+const postBtn = document.getElementById("post-btn");
+
+postBtn.addEventListener("click", async () => {
+
+const text = document.getElementById("announcement").value;
+
+if(text === "") return;
+
+await addDoc(collection(db, "announcements"), {
+
+text:text,
+sender:"Admin",
+time:Date.now()
+
+});
+
+alert("Announcement Posted");
+
+
+
+});
+
+const deleteUserBtn = document.getElementById("delete-user-btn");
+
+deleteUserBtn.addEventListener("click", async () => {
+
+const username = document
+.getElementById("delete-user-name")
+.value
+.trim()
+.toLowerCase();
+
+if(username === ""){
+
+alert("Enter username");
+
+return;
+
+}
+
+const snapshot = await getDocs(collection(db, "messages"));
+
+let found = false;
+
+for(const messageDoc of snapshot.docs){
+
+const data = messageDoc.data();
+
+if(data.name && data.name.toLowerCase().includes(username)){
+
+await deleteDoc(doc(db, "messages", messageDoc.id));
+
+found = true;
+
+}
+
+}
+
+if(found){
+
+alert("User messages deleted successfully");
+
+}
+
+else{
+
+alert("No messages found");
+
+}
+
+});
+
+
+
+</script>
+
+</body>
+</html>
