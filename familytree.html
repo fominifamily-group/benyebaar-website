@@ -25,86 +25,108 @@
 Back Home
 </a>
 
-<!-- GRANDPARENTS -->
-
-<div class="member grandparent">
-
-<img src="images/grandpa.jpg">
-
-<h2>Grandfather</h2>
-
-<p>Family Patriarch</p>
-
-</div>
-
-<div class="line"></div>
-
-<!-- PARENTS -->
-
-<div class="parents">
-
-<div class="member parent">
-
-<img src="images/father.jpg">
-
-<h2>Father</h2>
-
-<p>Head of Family</p>
-
-</div>
-
-<div class="member parent">
-
-<img src="images/mother.jpg">
-
-<h2>Mother</h2>
-
-<p>Family Caregiver</p>
+<div id="family-tree"></div>
 
 </div>
 
 </div>
+<script type="module">
 
-<div class="line"></div>
+import { initializeApp }
 
-<!-- CHILDREN -->
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+
+getFirestore,
+collection,
+getDocs
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+
+ apiKey: "AIzaSyA7FCPSsD0n0J6-D0UnxIu4VwTjopyyil8",
+  authDomain: "benyebaar-family.firebaseapp.com",
+  projectId: "benyebaar-family",
+  storageBucket: "benyebaar-family.firebasestorage.app",
+  messagingSenderId: "657772594344",
+  appId: "1:657772594344:web:843e51ede1f0e499f32e9d",
+  measurementId: "G-ERS3ZCXVGQ"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+const familyTree = document.getElementById("family-tree");
+
+async function loadFamilyMembers(){
+
+const snapshot = await getDocs(collection(db, "familyMembers"));
+
+const groupedFamilies = {};
+
+snapshot.forEach((doc) => {
+
+const data = doc.data();
+
+if(!groupedFamilies[data.family]){
+
+groupedFamilies[data.family] = [];
+
+}
+
+groupedFamilies[data.family].push(data);
+
+});
+
+familyTree.innerHTML = "";
+
+for(const familyName in groupedFamilies){
+
+familyTree.innerHTML += `
+
+<div class="family-group">
+
+<h2 class="family-title">
+
+${familyName}
+
+</h2>
 
 <div class="children">
 
-<div class="member child">
-
-<img src="images/child1.jpg">
-
-<h2>Child 1</h2>
-
-<p>First Born</p>
-
-</div>
+${groupedFamilies[familyName].map(member => `
 
 <div class="member child">
 
-<img src="images/child2.jpg">
+<img src="${member.photo}">
 
-<h2>Child 2</h2>
+<h2>${member.name}</h2>
 
-<p>Second Born</p>
+<p>${member.role}</p>
 
 </div>
 
-<div class="member child">
-
-<img src="images/child3.jpg">
-
-<h2>Child 3</h2>
-
-<p>Third Born</p>
+`).join("")}
 
 </div>
 
 </div>
 
-</div>
+`;
 
+}
+
+}
+
+loadFamilyMembers();
+
+</script>
 </body>
 
 </body>
