@@ -123,7 +123,6 @@ Post
             
             <img src="images/image40.jpg" alt="">
             <img src="images/image41.jpg" alt="">
-            <img src="images/image42.jpg" alt="">
             <img src="images/image43.jpg" alt="">
             <img src="images/image44.jpg" alt="">
             <img src="images/image45.jpg" alt="">
@@ -135,7 +134,6 @@ Post
             <img src="images/image51.jpg" alt="">
             <img src="images/image52.jpg" alt="">
             <img src="images/image53.jpg" alt="">
-            <img src="images/image54.jpg" alt="">
             <img src="images/image55.jpg" alt="">
             <img src="images/image56.jpg" alt="">
         
@@ -145,13 +143,15 @@ Post
 
     <section id="contact">
         <h2>Contact Us</h2>
+            <form id="contact-form">
+    <input type="text" id="contact-name" placeholder="Your Name" required>
 
-        <form>
-            <input type="text" placeholder="Your Name" required>
-            <input type="email" placeholder="Your Email" required>
-            <textarea placeholder="Your Message"></textarea>
-            <button type="submit">Send Message</button>
-        </form>
+    <input type="email" id="contact-email" placeholder="Your Email" required>
+
+    <textarea id="contact-message" placeholder="Your Message"></textarea>
+
+    <button type="submit">Send Message</button>
+</form>
     </section>
 
         <footer>
@@ -237,6 +237,30 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
+
+const contactForm = document.getElementById("contact-form");
+
+contactForm.addEventListener("submit", async (e) => {
+
+e.preventDefault();
+
+await addDoc(collection(db, "contactMessages"), {
+
+name: document.getElementById("contact-name").value,
+
+email: document.getElementById("contact-email").value,
+
+message: document.getElementById("contact-message").value,
+
+time: Date.now()
+
+});
+
+alert("Message sent successfully!");
+
+contactForm.reset();
+
+});
 
 const announcementInput = document.getElementById("announcement-message");
 
