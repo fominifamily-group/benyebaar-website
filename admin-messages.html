@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Contact Messages</title>
+</head>
+<body>
+
+<h1>Contact Messages</h1>
+
+<div id="messages"></div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+getDocs
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyA7FCPSsD0n0J6-D0UnxIu4VwTjopyyiI8",
+
+authDomain: "benyebaar-family.firebaseapp.com",
+
+projectId: "benyebaar-family",
+
+storageBucket: "benyebaar-family.firebasestorage.app",
+
+messagingSenderId: "657772594344",
+
+appId: "1:657772594344:web:843e51ede1f0e499f32e9d",
+
+measurementId: "G-ERS3ZCXVGQ"
+
+
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const messagesDiv = document.getElementById("messages");
+
+async function loadMessages(){
+
+const snapshot = await getDocs(collection(db,"contactMessages"));
+
+snapshot.forEach((doc)=>{
+
+const data = doc.data();
+
+messagesDiv.innerHTML += `
+<div style="border:1px solid #ccc;padding:10px;margin:10px;">
+<h3>${data.name}</h3>
+<p><b>Email:</b> ${data.email}</p>
+<p>${data.message}</p>
+</div>
+`;
+
+});
+
+}
+
+loadMessages();
+
+</script>
+
+</body>
+</html>
